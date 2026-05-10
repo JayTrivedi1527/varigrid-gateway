@@ -1,0 +1,45 @@
+# Varigrid Gateway — example config
+#
+# 1. Copy to gateway_config.yaml
+# 2. Replace api_key with the value Varigrid showed you when you
+#    added the gateway in Settings → Sensors.
+# 3. Replace each sensor `id` with the UUID Varigrid generated when
+#    you added that sensor.
+
+gateway:
+  api_url:               https://api.varigrid.in
+  api_key:               vrg_REPLACE_ME
+  heartbeat_interval_s:  60
+  buffer_path:           /var/lib/varigrid/buffer.db
+  push_batch_size:       50
+
+sensors:
+
+  # ─── Real Modbus TCP example ────────────────────────────────
+  # Schneider PM5560 reading active power (kW) from the IT panel.
+  # Holding register 40012, 32-bit float, big-endian.
+  - id:               REPLACE_WITH_SENSOR_UUID
+    kind:             modbus_tcp
+    poll_interval_s:  30
+    config:
+      ip:              10.20.1.5
+      port:            502
+      unit_id:         1
+      register:        40012
+      register_count:  2
+      data_type:       float32
+      byte_order:      big
+      scale:           1.0          # multiply raw → final unit (e.g. 0.001 for kW from W)
+
+  # ─── Demo simulator (no real device) ────────────────────────
+  # Useful for prospects evaluating the platform — generates a
+  # plausible facility power waveform.
+  - id:               REPLACE_WITH_SENSOR_UUID
+    kind:             simulator
+    poll_interval_s:  10
+    config:
+      pattern:        walk           # walk | sine | ramp
+      start:          1500
+      drift:          5              # max +/- per tick (walk only)
+      # for sine: amplitude, period_s, offset
+      # for ramp: end, period_s

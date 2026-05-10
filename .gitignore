@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# venv
+venv/
+.venv/
+env/
+
+# Local config (real keys go here, never check in)
+gateway_config.yaml
+
+# Local buffer
+*.db
+buffer.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store

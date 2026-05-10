@@ -1,0 +1,12 @@
+.git
+.gitignore
+.dockerignore
+__pycache__
+*.pyc
+*.pyo
+venv/
+.venv/
+tests/
+gateway_config.yaml
+*.db
+.DS_Store

@@ -107,17 +107,26 @@ Network drops do not lose data. The buffer caps at 100 000 rows
 
 ## Supported sensor kinds
 
-| `kind`        | What it does                                         | Status        |
-|---------------|------------------------------------------------------|---------------|
-| `modbus_tcp`  | Polls Modbus TCP holding/input registers             | ✅ Stable     |
-| `simulator`   | Generates fake values (walk/sine/ramp) for demos     | ✅ Stable     |
-| `modbus_rtu`  | Modbus over RS-485 serial                            | 🚧 Planned    |
-| `snmp`        | SNMP v2c/v3 polling                                  | 🚧 Planned    |
-| `bacnet`      | BACnet/IP read-property                              | 🚧 Planned    |
-| `mqtt`        | Subscribe to MQTT topic from a customer broker       | 🚧 Planned    |
+| `kind`        | What it covers                                        | Status     |
+|---------------|------------------------------------------------------|------------|
+| `modbus_tcp`  | Modern MFMs (Schneider PM5xxx, Selec MFM384, L&T 5060), modern UPS, gensets, many CRACs | ✅ Stable |
+| `modbus_rtu`  | RS-485 serial — older meters, aisle temp probe chains, older chillers | ✅ Stable |
+| `snmp`        | UPS (APC, Eaton, Vertiv via UPS-MIB), smart PDUs (Raritan, Geist, APC) — v2c + v3 | ✅ Stable |
+| `mqtt`        | Subscribe to a customer's existing MQTT broker (Mosquitto, HiveMQ, EMQX) | ✅ Stable |
+| `opcua`       | Industrial standard — SCADA, Wonderware, Ignition, modern BMS/EMS    | ✅ Stable |
+| `bacnet`      | BACnet/IP — Honeywell Niagara, Siemens Desigo, Johnson Metasys, BMS-attached CRACs | ✅ Stable |
+| `simulator`   | Generates fake values (walk/sine/ramp) for demos      | ✅ Stable  |
 
-If you need one of the planned kinds, open an issue or email
-`support@varigrid.in` — we'll prioritise based on demand.
+Need a vendor-specific REST API (Schneider EcoStruxure, Vertiv Trellis,
+custom HTTP source)? Use the **universal HTTPS push** path — any system
+that can `POST` JSON can stream readings directly to
+`https://api.varigrid.in/api/ingest/{sensor_id}` with the gateway's API
+key. See the in-app "Push via webhook" docs (Settings → Sensors → `<>` icon).
+
+## Per-protocol config quick-reference
+
+See `gateway_config.example.yaml` for the full annotated template — one
+worked example per protocol, ready to copy and edit.
 
 ---
 
